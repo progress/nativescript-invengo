@@ -1,37 +1,35 @@
 "use strict";
 var observable_1 = require('data/observable');
 var invengoModule = require("nativescript-invengo");
-var HelloWorldModel = (function (_super) {
-    __extends(HelloWorldModel, _super);
-    function HelloWorldModel() {
+var MainViewModel = (function (_super) {
+    __extends(MainViewModel, _super);
+    function MainViewModel() {
         _super.call(this);
         this.invengo = new invengoModule.Invengo();
+        var _this = this;
+        this.invengo.addReaderChangeListener(function (epc) {
+            _this.tag = epc;
+        });
+        this.invengo.wakeUp();
+        this.tag = "--";
     }
-    Object.defineProperty(HelloWorldModel.prototype, "message", {
+    Object.defineProperty(MainViewModel.prototype, "tag", {
         get: function () {
-            return this._message;
+            return this._tag;
         },
         set: function (value) {
-            if (this._message !== value) {
-                this._message = value;
-                this.notifyPropertyChange('message', value);
+            if (this._tag !== value) {
+                this._tag = value;
+                this.notifyPropertyChange('tag', value);
             }
         },
         enumerable: true,
         configurable: true
     });
-    HelloWorldModel.prototype.onScan = function () {
+    MainViewModel.prototype.onScan = function () {
         this.invengo.readTag();
     };
-    HelloWorldModel.prototype.updateMessage = function () {
-        if (this._counter <= 0) {
-            this.message = 'Hoorraaay! You unlocked the NativeScript clicker achievement!';
-        }
-        else {
-            this.message = this._counter + " taps left";
-        }
-    };
-    return HelloWorldModel;
+    return MainViewModel;
 }(observable_1.Observable));
-exports.HelloWorldModel = HelloWorldModel;
+exports.MainViewModel = MainViewModel;
 //# sourceMappingURL=main-view-model.js.map

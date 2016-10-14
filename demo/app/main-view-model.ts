@@ -1,38 +1,40 @@
 import {Observable} from 'data/observable';
 var invengoModule = require("nativescript-invengo");
 
-export class HelloWorldModel extends Observable {
+export class MainViewModel extends Observable {
 
   private invengo:any;
 
   private _counter: number;
-  private _message: string;
+  private _tag: string;
 
   constructor() {
     super();
     this.invengo = new invengoModule.Invengo();
+
+    let _this = this;
+
+    this.invengo.addReaderChangeListener((epc)=>{
+        _this.tag = epc;
+    });
+
+    this.invengo.wakeUp();
+
+    this.tag = "--";
   }
 
-  get message(): string {
-    return this._message;
+  get tag(): string {
+    return this._tag;
   }
 
-  set message(value: string) {
-    if (this._message !== value) {
-      this._message = value;
-      this.notifyPropertyChange('message', value)
+  set tag(value: string) {
+    if (this._tag !== value) {
+      this._tag = value;
+      this.notifyPropertyChange('tag', value)
     }
   }
 
   public onScan() {
     this.invengo.readTag();
-  }
-
-  private updateMessage() {
-    if (this._counter <= 0) {
-      this.message = 'Hoorraaay! You unlocked the NativeScript clicker achievement!';
-    } else {
-      this.message = `${this._counter} taps left`;
-    }
   }
 }

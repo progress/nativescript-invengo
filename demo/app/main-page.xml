@@ -1,7 +1,23 @@
 <Page xmlns="http://schemas.nativescript.org/tns.xsd" navigatingTo="navigatingTo">
-  <StackLayout>
-    <Label text="Tap the button To Scan" class="title"/>
-    <Button text="SCAN" tap="{{ onScan }}" />
-    <Label text="{{ message }}" class="message" textWrap="true"/>
-  </StackLayout>
+
+  <ActionBar automationText="ActionBar" android:opacity="0">
+      <ActionBar.titleView>
+            <Label text="Invengo RFID Reader" textWrap="true"/>
+      </ActionBar.titleView>
+  </ActionBar>
+
+  <GridLayout margin="5" rows="*, auto, 20">
+    <StackLayout row="0">
+      <Label text="Tap the button To Scan" class="title"/>
+
+      <Label text="{{tag}}" class="tag" textWrap="true"/>
+
+      <Button text="Scan a RFID Tag" tap="{{ onScan }}" />
+
+    </StackLayout>
+
+    <Image src="res://ic_connected_logo" class="logo" horizontalAlignment="center" row="1" />
+
+  </GridLayout>
+
 </Page>

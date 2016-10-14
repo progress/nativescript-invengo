@@ -5,7 +5,9 @@ var Invengo = (function () {
         this.DEFAULT_OFFSET = 2;
         this.DEFAULT_LENGTH = 2;
         this.reader = com.atid.lib.dev.ATRfidManager.getInstance();
-        if (this.reader) {
+    }
+    Invengo.prototype.addReaderChangeListener = function (callback) {
+        try {
             this.reader.setEventListener(new com.atid.lib.dev.event.RfidReaderEventListener({
                 onReaderActionChanged: function (reader, actionState) {
                     console.log(actionState);
@@ -14,24 +16,28 @@ var Invengo = (function () {
                     console.log(state);
                 },
                 onReaderReadTag: function (reader, tag, v1, v2) {
+                    // TODO:
                 },
                 onReaderResult: function (reader, code, action, epc, data, rssi, phase) {
-                    console.log(epc);
+                    callback(epc);
                 }
             }));
-            com.atid.lib.dev.ATRfidManager.wakeUp();
         }
-    }
+        catch (exception) {
+            console.error("Reader Error", exception.message);
+        }
+    };
     Invengo.prototype.readTag = function () {
         var NoError = com.atid.lib.dev.rfid.type.ResultCode.NoError;
         var bank = this.DEFULT_BANK;
         var offset = this.DEFAULT_OFFSET;
         var length = this.DEFAULT_LENGTH;
-        console.log(bank);
-        console.log(this.reader.readMemory6c(bank, offset, length, "", null));
-        // if (this.reader.readMemory6c(bank, offset, length) !== NoError){
-        //       console.log("Failed to read tag");
-        // }
+        if (this.reader.readMemory6c(bank, offset, length) !== NoError) {
+            console.log("Failed to read tag");
+        }
+    };
+    Invengo.prototype.wakeUp = function () {
+        com.atid.lib.dev.ATRfidManager.wakeUp();
     };
     return Invengo;
 }());
