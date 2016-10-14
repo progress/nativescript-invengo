@@ -8,7 +8,7 @@
 
   <GridLayout margin="5" rows="*, auto, 20">
     <StackLayout row="0">
-      <Label text="Tap the button To Scan" class="title"/>
+      <Label text="Invengo Reader" class="title"/>
 
       <Label text="{{tag}}" class="tag" textWrap="true"/>
 
