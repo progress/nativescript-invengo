@@ -1,0 +1,46 @@
+{
+    "name": "nativescript-invengo",
+    "version": "1.0.0",
+    "description": "Invengo RFID reader plugin for nativescript",
+    "main": "invengo.js",
+    "nativescript": {
+        "platforms": {
+            "android": "2.0.0"
+        }
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/mehfuzh/nativescript-nativescript-invengo.git"
+    },
+    "keywords": [
+        "NativeScript",
+        "nativescript-invengo",
+        "Invengo",
+        "RFID",
+        "iOT"
+    ],
+    "author": {
+        "name": "Mehfuz Hossain",
+        "email": "mehfuz@gmail.com"
+    },
+    "license": {
+        "type": "MIT",
+        "url": "https://github.com/mehfuzh/nativescript-invengo/blob/master/LICENSE"
+    },
+    "bugs": {
+        "url": "https://github.com/mehfuzh/nativescript-invengo/issues"
+    },
+    "homepage": "https://github.com/mehfuzh/nativescript-invengo",
+    "readmeFilename": "README.md",
+    "scripts": {
+        "build": "tsc",
+        "demo.ios": "npm run preparedemo && cd demo && tns emulate ios",
+        "demo.android": "npm run preparedemo && cd demo && tns run android",
+        "debug.ios": "npm run preparedemo && cd demo && tns debug ios --emulator",
+        "debug.android": "npm run preparedemo && cd demo && tns debug android --emulator",
+        "preparedemo": "npm run build && cd demo && tns plugin remove nativescript-nativescript-invengo && tns plugin add .. && tns install",
+        "setup": "cd demo && npm install && cd .. && npm run build && cd demo && tns plugin add .. && cd ..",
+        "prepublish": "tsc",
+        "start": "npm run demo.ios"
+    }
+}
