@@ -49,11 +49,10 @@ Next, in order to initialize the reader, first you have to a listener and then c
 Given that you have configured the plugin in a view / app scope, `readTag` reads an EPC tag with an Invengo XC-1003 android device.
 
 ```
-// native-script method
-public onScan() {
-  this.invengo.readTag();
-}
-
+  // native-script method
+  public onScan() {
+    this.invengo.readTag();
+  }
 ```
 ## Platform
 
