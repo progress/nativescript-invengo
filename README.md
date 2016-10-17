@@ -34,25 +34,24 @@ Including the Plugin in Your Project
 Next, in order to initialize the reader, first you have to a listener and then call the `wakeUp` method:
 
 ```
-    this.invengo = new invengoModule.Invengo();
+  this.invengo = new invengoModule.Invengo();
 
-    let _this = this;
+  let _this = this;
 
-    this.invengo.addReaderChangeListener((epc)=>{
-        _this.tag = epc;
-    });
+  this.invengo.addReaderChangeListener((epc)=>{
+      _this.tag = epc;
+  });
 
-    this.invengo.wakeUp();
-
+  this.invengo.wakeUp();
 ```
 
 Given that you have configured the plugin in a view / app scope, `readTag` reads an EPC tag with an Invengo XC-1003 android device.
 
 ```
-  // native-script method
   public onScan() {
     this.invengo.readTag();
   }
+
 ```
 ## Platform
 
