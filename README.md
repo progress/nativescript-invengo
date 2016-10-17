@@ -11,12 +11,12 @@ tns plugin add nativescript-invengo
 
 ```
 
-If you're using TypeScript and wish to make use of the type definitions for this plugin, add the following line to your project's *references.d.ts* file:
+If you're using TypeScript and wish to make use of the type definitions for this plugin, add the following line to your project's **references.d.ts** file:
 
 ```
   /// <reference path="./node_modules/nativescript-invengo/invengo.d.ts" />
-
 ```
+
 Without the above line included, your TypeScript compiler may throw errors during the build.
 
 ## Methods
@@ -46,7 +46,7 @@ Next, in order to initialize the reader, first you have to a listener and then c
 
 ```
 
-Given that you have configured the plugin in a view / app scope, once `readTag` reads the EPC tag. I am using Invengo XC-1003 android device.
+Given that you have configured the plugin in a view / app scope, `readTag` reads an EPC tag with an Invengo XC-1003 android device.
 
 ```
 // native-script method
