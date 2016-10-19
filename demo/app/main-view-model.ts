@@ -1,5 +1,9 @@
+import frameModule = require('ui/frame');
+
 import {Observable} from 'data/observable';
+
 var invengoModule = require("nativescript-invengo");
+var SqlLite = require('nativescript-sqlite');
 
 export class MainViewModel extends Observable {
 
@@ -7,19 +11,39 @@ export class MainViewModel extends Observable {
 
   private _counter: number;
   private _tag: string;
+  private database:any;
 
   constructor() {
     super();
-    this.invengo = new invengoModule.Invengo();
 
-    let _this = this;
+    let that = this;
 
-    this.invengo.addReaderChangeListener((epc)=>{
-        _this.tag = epc;
+    new SqlLite(global.DBNAME, (err, db)=>{
+        if (err){
+            console.log("Failed initialize the storage", err);
+        }
+        console.log("Database Status: " + db.isOpen());
+
+        that.database = db;
     });
 
-    this.invengo.wakeUp();
+    this.invengo = new invengoModule.Invengo();
 
+    this.invengo.addReaderChangeListener((epc)=>{
+        that.database.execSQL("insert into invengo (tag, createdAt) values (?, ?)", [epc, new Date()], (err, id)=>{
+          if (err){
+            console.log(err);
+          }
+          that.tag = epc;
+        });
+    });
+
+    let schema = "CREATE TABLE IF NOT EXISTS invengo (id integer primary key, tag text, createdAt text)"
+
+    this.database.execSQL(schema).then((err, id)=>{
+      this.invengo.wakeUp();
+    });
+ 
     this.tag = "--";
   }
 
@@ -36,5 +60,9 @@ export class MainViewModel extends Observable {
 
   public onScan() {
     this.invengo.readTag();
+  }
+
+  public history(){
+      frameModule.topmost().navigate("history");
   }
 }

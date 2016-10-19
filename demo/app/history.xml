@@ -1,0 +1,20 @@
+<Page xmlns="http://schemas.nativescript.org/tns.xsd" navigatingTo="navigatingTo">
+    <ActionBar title="History">
+        <NavigationButton text="Back" android.systemIcon="ic_menu_back" tap="{{back}}"></NavigationButton>
+    </ActionBar>
+ 
+    <ListView items="{{ history }}" >
+      <ListView.itemTemplate>
+        <GridLayout columns="auto,auto" rows="auto">
+            <Image src="res://option_normal" col="0" class="history_image"/>
+            <GridLayout margin="10"  col="1" >
+                <StackLayout>
+                    <Label text="{{ tag }}" textWrap="true"/>
+                    <Label text="{{ date }}" textWrap="true" class="message"/>
+                </StackLayout>
+            </GridLayout>
+        </GridLayout>
+      </ListView.itemTemplate>
+  </ListView>
+
+</Page>

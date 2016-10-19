@@ -1,20 +1,23 @@
-<Page xmlns="http://schemas.nativescript.org/tns.xsd" navigatingTo="navigatingTo">
+<Page xmlns="http://schemas.nativescript.org/tns.xsd" 
+navigatingTo="navigatingTo">
 
-  <ActionBar automationText="ActionBar" android:opacity="0">
-      <ActionBar.titleView>
-            <Label text="Invengo RFID Reader" textWrap="true"/>
-      </ActionBar.titleView>
+  <ActionBar automationText="ActionBar"  title="Invengo RFID Reader Demo">
+      <ActionBar.actionItems>
+        <ActionItem text="History" tap="{{history}}" ios.position="right" android.position="popup"/>
+      </ActionBar.actionItems>
   </ActionBar>
 
   <GridLayout margin="5" rows="*, auto, 20">
-    <StackLayout row="0">
-      <Label text="Invengo Reader" class="title"/>
 
-      <Label text="{{tag}}" class="tag" textWrap="true"/>
+    <GridLayout>
+      <StackLayout verticalAlignment="center">
 
-      <Button text="Scan a RFID Tag" tap="{{ onScan }}" />
+        <Label text="{{tag}}" class="tag" textWrap="true"/>
+        <Button text="Scan a RFID Tag" tap="{{ onScan }}" />
 
-    </StackLayout>
+      </StackLayout>
+
+    </GridLayout>
 
     <Image src="res://ic_connected_logo" class="logo" horizontalAlignment="center" row="1" />
 

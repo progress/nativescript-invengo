@@ -1,0 +1,18 @@
+Image {
+    margin:5px; 
+    width: 50; 
+}
+
+.title {
+    horizontal-align: left;
+    margin-top: 10px;
+    margin-bottom: 5;
+    font-size: 15px;
+}
+.message {
+    horizontal-align: left;
+    margin: 5px;
+    font-size: 13px;
+    margin: 0;
+    text-align: left;
+}
