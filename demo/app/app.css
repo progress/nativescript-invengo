@@ -3,6 +3,13 @@ GridLayout {
   margin: 20;
 }
 
+/*ActionBar {
+  margin-top: 25px;
+}*/
+StatusBar {
+  background-color: black;
+}
+
 .title {
     font-size: 30;
     margin: 5px;

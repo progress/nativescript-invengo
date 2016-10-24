@@ -1,5 +1,6 @@
-<Page xmlns="http://schemas.nativescript.org/tns.xsd" 
-navigatingTo="navigatingTo">
+<Page xmlns="http://schemas.nativescript.org/tns.xsd"
+  loaded="pageLoaded">
+
 
   <ActionBar automationText="ActionBar"  title="Invengo RFID Reader Demo">
       <ActionBar.actionItems>
@@ -7,19 +8,23 @@ navigatingTo="navigatingTo">
       </ActionBar.actionItems>
   </ActionBar>
 
-  <GridLayout margin="5" rows="*, auto, 20">
 
-    <GridLayout>
-      <StackLayout verticalAlignment="center">
+  <GridLayout margin="0" rows="200, auto, *, 30, 20">
+    <!-- <maps:TnsGoogleMaps id="map" marker="{{locations}}"/> -->
+
+    <GridLayout row="1">
+
+      <StackLayout verticalAlignment="center" >
 
         <Label text="{{tag}}" class="tag" textWrap="true"/>
         <Button text="Scan a RFID Tag" tap="{{ onScan }}" />
 
       </StackLayout>
 
+
     </GridLayout>
 
-    <Image src="res://ic_connected_logo" class="logo" horizontalAlignment="center" row="1" />
+    <Image src="res://ic_connected_logo" class="logo" horizontalAlignment="center"  row="3"/>
 
   </GridLayout>
 

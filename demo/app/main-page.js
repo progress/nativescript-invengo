@@ -1,10 +1,12 @@
 "use strict";
 var main_view_model_1 = require('./main-view-model');
 // Event handler for Page "navigatingTo" event attached in main-page.xml
-function navigatingTo(args) {
+function pageLoaded(args) {
     // Get the event sender
     var page = args.object;
-    page.bindingContext = new main_view_model_1.MainViewModel();
+    var viewModel = new main_view_model_1.MainViewModel();
+    viewModel.invengo.wakeUp();
+    page.bindingContext = viewModel;
 }
-exports.navigatingTo = navigatingTo;
+exports.pageLoaded = pageLoaded;
 //# sourceMappingURL=main-page.js.map

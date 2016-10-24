@@ -4,9 +4,13 @@ import { MainViewModel } from './main-view-model';
 
 
 // Event handler for Page "navigatingTo" event attached in main-page.xml
-export function navigatingTo(args: EventData) {
+export function pageLoaded(args: EventData) {
   // Get the event sender
   let page = <Page>args.object;
 
-  page.bindingContext = new MainViewModel();
+  var viewModel = new MainViewModel();
+
+  viewModel.invengo.wakeUp();
+
+  page.bindingContext = viewModel;
 }

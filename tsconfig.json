@@ -9,7 +9,6 @@
       "noImplicitAny": false
     },
     "files": [
-        "demo/node_modules/tns-core-modules/tns-core-modules.d.ts",
         "invengo.android.ts"
     ]
 }

@@ -10,6 +10,7 @@
     }
   },
   "dependencies": {
+    "nativescript-geolocation": "0.0.13",
     "nativescript-invengo": "file:..",
     "nativescript-sqlite": "^1.1.2",
     "tns-core-modules": "2.3.0"
