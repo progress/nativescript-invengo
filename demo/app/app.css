@@ -10,6 +10,23 @@ StatusBar {
   background-color: black;
 }
 
+.location {
+    horizontal-align: center;
+}
+
+.location-label {
+    color: #3d5afe;
+    padding: 5;
+    margin-left: 2;
+}
+
+.location-label2 {
+    background-color: #3d5afe;
+    color: white;
+    padding: 5;
+    margin-right: 5;
+}
+
 .title {
     font-size: 30;
     margin: 5px;

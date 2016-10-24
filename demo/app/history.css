@@ -1,6 +1,6 @@
 Image {
-    margin:5px; 
-    width: 50; 
+    margin:5px;
+    width: 50;
 }
 
 .title {
@@ -15,4 +15,9 @@ Image {
     font-size: 13px;
     margin: 0;
     text-align: left;
+}
+
+.location {
+    margin-top: 5px;
+    horizontal-align: left;
 }

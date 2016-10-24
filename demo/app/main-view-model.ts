@@ -7,6 +7,11 @@ import {ObservableArray} from "data/observable-array";
 var invengoModule = require("nativescript-invengo");
 var SqlLite = require('nativescript-sqlite');
 
+export interface Location {
+    lat : number,
+    lng : number
+}
+
 export class MainViewModel extends Observable {
 
   private _invengo:any;
@@ -15,12 +20,19 @@ export class MainViewModel extends Observable {
   private _tag: string;
   private database:any;
 
+
   private _locations: ObservableArray<geolocation.Location>;
+  private _location:Location;
 
   constructor() {
     super();
 
     let that = this;
+
+    this._location  = {
+       lat : 37.4419,
+       lng : -122.1430
+    };
 
     new SqlLite(global.DBNAME, (err, db)=>{
         if (err){
@@ -34,7 +46,7 @@ export class MainViewModel extends Observable {
     this._invengo = new invengoModule.Invengo();
 
     this._invengo.addReaderChangeListener((epc)=>{
-        that.database.execSQL("insert into invengo (tag, createdAt) values (?, ?)", [epc, new Date()], (err, id)=>{
+        that.database.execSQL("insert into invengo (tag, lat, lng, createdAt) values (?, ?, ? , ?)", [epc, that.location.lat, that.location.lng, new Date()], (err, id)=>{
           if (err){
             console.log(err);
           }
@@ -43,29 +55,26 @@ export class MainViewModel extends Observable {
         });
     });
 
-    let schema = "CREATE TABLE IF NOT EXISTS invengo (id integer primary key, tag text, createdAt text)"
+    let schema = "CREATE TABLE IF NOT EXISTS invengo (id integer primary key, tag text, lat number, lng number, createdAt text)"
 
     this.database.execSQL(schema).then((err, id)=>{
-      var loc = <geolocation.Location>{
-          latitude : 37.4419,
-          longitude : -122.1430
-      };
+      let watchId = geolocation.watchLocation((loc)=>{
+          if (loc){
+              that.set("location", {
+                  lat : loc.latitude.toFixed(4),
+                  lng: loc.longitude
+              });
+              geolocation.clearWatch(watchId);
+          }
+      }, (e)=>{
+          console.log("Error: " + e.message);
+      },{
+        updateDistance: 0.1,
+        minimumUpdateTime: 100
+      });
 
-      // default location.
-      that.locations.push(loc);
-
-      var location = geolocation.getCurrentLocation({updateDistance: 0.1, timeout :2000 }).
-        then(function (loc) {
-            console.log(loc);
-            if (loc) {
-                that.locations.push(loc);
-            }
-        }, function (e) {
-            console.log("Error: " + e.message);
-        });
+      this.tag = "--";
     });
-
-    this.tag = "--";
   }
 
   public get invengo(): any {
@@ -84,6 +93,17 @@ export class MainViewModel extends Observable {
           this._locations = value;
           this.notifyPropertyChange('locations', value)
       }
+  }
+
+  public get location(): Location {
+    return this._location;
+  }
+
+  public set location(value: Location) {
+    if (this._location !== value) {
+      this._location = value;
+      this.notifyPropertyChange('location', value);
+    }
   }
 
   get tag(): string {

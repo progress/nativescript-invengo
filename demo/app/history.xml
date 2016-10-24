@@ -2,7 +2,7 @@
     <ActionBar title="History">
         <NavigationButton text="Back" android.systemIcon="ic_menu_back" tap="{{back}}"></NavigationButton>
     </ActionBar>
- 
+
     <ListView items="{{ history }}" >
       <ListView.itemTemplate>
         <GridLayout columns="auto,auto" rows="auto">
@@ -11,6 +11,10 @@
                 <StackLayout>
                     <Label text="{{ tag }}" textWrap="true"/>
                     <Label text="{{ date }}" textWrap="true" class="message"/>
+                    <StackLayout orientation="horizontal" class="location">
+                      <Label text="{{ lat }}" textWrap="true" class="location-label2"/>
+                      <Label text="{{ lng }}" textWrap="true" class="location-label2"/>
+                    </StackLayout>
                 </StackLayout>
             </GridLayout>
         </GridLayout>

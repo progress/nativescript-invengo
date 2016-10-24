@@ -8,8 +8,13 @@ var SqlLite = require('nativescript-sqlite');
 var MainViewModel = (function (_super) {
     __extends(MainViewModel, _super);
     function MainViewModel() {
+        var _this = this;
         _super.call(this);
         var that = this;
+        this._location = {
+            lat: 37.4419,
+            lng: -122.1430
+        };
         new SqlLite(global.DBNAME, function (err, db) {
             if (err) {
                 console.log("Failed initialize the storage", err);
@@ -19,7 +24,7 @@ var MainViewModel = (function (_super) {
         });
         this._invengo = new invengoModule.Invengo();
         this._invengo.addReaderChangeListener(function (epc) {
-            that.database.execSQL("insert into invengo (tag, createdAt) values (?, ?)", [epc, new Date()], function (err, id) {
+            that.database.execSQL("insert into invengo (tag, lat, lng, createdAt) values (?, ?, ? , ?)", [epc, that.location.lat, that.location.lng, new Date()], function (err, id) {
                 if (err) {
                     console.log(err);
                 }
@@ -27,25 +32,24 @@ var MainViewModel = (function (_super) {
                 console.log(epc);
             });
         });
-        var schema = "CREATE TABLE IF NOT EXISTS invengo (id integer primary key, tag text, createdAt text)";
+        var schema = "CREATE TABLE IF NOT EXISTS invengo (id integer primary key, tag text, lat number, lng number, createdAt text)";
         this.database.execSQL(schema).then(function (err, id) {
-            var loc = {
-                latitude: 37.4419,
-                longitude: -122.1430
-            };
-            // default location.
-            that.locations.push(loc);
-            var location = geolocation.getCurrentLocation({ updateDistance: 0.1, timeout: 2000 }).
-                then(function (loc) {
-                console.log(loc);
+            var watchId = geolocation.watchLocation(function (loc) {
                 if (loc) {
-                    that.locations.push(loc);
+                    that.set("location", {
+                        lat: loc.latitude.toFixed(4),
+                        lng: loc.longitude
+                    });
+                    geolocation.clearWatch(watchId);
                 }
             }, function (e) {
                 console.log("Error: " + e.message);
+            }, {
+                updateDistance: 0.1,
+                minimumUpdateTime: 100
             });
+            _this.tag = "--";
         });
-        this.tag = "--";
     }
     Object.defineProperty(MainViewModel.prototype, "invengo", {
         get: function () {
@@ -65,6 +69,19 @@ var MainViewModel = (function (_super) {
             if (this._locations !== value) {
                 this._locations = value;
                 this.notifyPropertyChange('locations', value);
+            }
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MainViewModel.prototype, "location", {
+        get: function () {
+            return this._location;
+        },
+        set: function (value) {
+            if (this._location !== value) {
+                this._location = value;
+                this.notifyPropertyChange('location', value);
             }
         },
         enumerable: true,

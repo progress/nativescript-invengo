@@ -8,6 +8,8 @@ var SqlLite = require('nativescript-sqlite');
 
 export interface HistoryItem {
     tag : string,
+    lat : number,
+    lng : number
     date : string,
 }
 
@@ -33,14 +35,18 @@ export class HistoryModel extends observable.Observable {
 
              db.all("SELECT * FROM invengo").then(rows => {
                     for(var row in rows) {
-                        
+
                         try {
                            var item = rows[row];
                            var columns = item.toString().split(",");
 
+                           console.log(columns);
+
                             let historyItem = {
                                  tag : columns[1],
-                                 date : columns[2]
+                                 lat : parseFloat(columns[2]).toFixed(4),
+                                 lng : columns[3],
+                                 date : columns[4]
                             }
 
                             items.push(historyItem);
@@ -58,7 +64,7 @@ export class HistoryModel extends observable.Observable {
 
         //         try {
         //             let columns = row.split(',');
-                
+
         //             console.log(columns);
 
         //             // let historyItem = {
@@ -73,7 +79,7 @@ export class HistoryModel extends observable.Observable {
 
         //     }, (err, count)=> {
         //         // that.set("history", items);
-        //         console.log("Rows displayed:", count); 
+        //         console.log("Rows displayed:", count);
         //     });
         });
    }

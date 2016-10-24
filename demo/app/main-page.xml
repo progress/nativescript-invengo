@@ -15,6 +15,11 @@
     <GridLayout row="1">
 
       <StackLayout verticalAlignment="center" >
+        <StackLayout orientation="horizontal" class="location">
+          <Label text="{{location.lat}}" textWrap="true" class="location-label"/>
+          <Label text="," textWrap="true"/>
+          <Label text="{{location.lng}}" textWrap="true" class="location-label"/>
+        </StackLayout>
 
         <Label text="{{tag}}" class="tag" textWrap="true"/>
         <Button text="Scan a RFID Tag" tap="{{ onScan }}" />
