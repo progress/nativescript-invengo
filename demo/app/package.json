@@ -3,7 +3,7 @@
 	"main": "app.js",
 	"version": "2.3.0",
 	"author": "Telerik <support@telerik.com>",
-	"description": "Nativescript hello-world-ts project template",
+	"description": "NativeScript Invengo Demo",
 	"license": "Apache-2.0",
 	"keywords": [
 		"telerik",
@@ -12,7 +12,7 @@
 		"{N}",
 		"tns",
 		"appbuilder",
-		"template"
+		"invengo"
 	],
 	"repository": {
 		"type": "git",

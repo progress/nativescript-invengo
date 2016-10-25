@@ -2,7 +2,6 @@
 var frameModule = require('ui/frame');
 var geolocation = require("nativescript-geolocation");
 var observable_1 = require('data/observable');
-var observable_array_1 = require("data/observable-array");
 var invengoModule = require("nativescript-invengo");
 var SqlLite = require('nativescript-sqlite');
 var MainViewModel = (function (_super) {
@@ -11,10 +10,10 @@ var MainViewModel = (function (_super) {
         var _this = this;
         _super.call(this);
         var that = this;
-        this._location = {
-            lat: 37.4419,
-            lng: -122.1430
-        };
+        that.set("location", {
+            latitude: 37.4419,
+            longitude: -122.1430
+        });
         new SqlLite(global.DBNAME, function (err, db) {
             if (err) {
                 console.log("Failed initialize the storage", err);
@@ -24,7 +23,7 @@ var MainViewModel = (function (_super) {
         });
         this._invengo = new invengoModule.Invengo();
         this._invengo.addReaderChangeListener(function (epc) {
-            that.database.execSQL("insert into invengo (tag, lat, lng, createdAt) values (?, ?, ? , ?)", [epc, that.location.lat, that.location.lng, new Date()], function (err, id) {
+            that.database.execSQL("insert into invengo (tag, lat, lng, createdAt) values (?, ?, ? , ?)", [epc, that.location.latitude, that.location.longitude, new Date()], function (err, id) {
                 if (err) {
                     console.log(err);
                 }
@@ -36,9 +35,10 @@ var MainViewModel = (function (_super) {
         this.database.execSQL(schema).then(function (err, id) {
             var watchId = geolocation.watchLocation(function (loc) {
                 if (loc) {
+                    console.log(loc);
                     that.set("location", {
-                        lat: loc.latitude.toFixed(4),
-                        lng: loc.longitude
+                        latitude: loc.latitude.toFixed(4),
+                        longitude: loc.longitude
                     });
                     geolocation.clearWatch(watchId);
                 }
@@ -54,22 +54,6 @@ var MainViewModel = (function (_super) {
     Object.defineProperty(MainViewModel.prototype, "invengo", {
         get: function () {
             return this._invengo;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(MainViewModel.prototype, "locations", {
-        get: function () {
-            if (!this._locations) {
-                this._locations = new observable_array_1.ObservableArray();
-            }
-            return this._locations;
-        },
-        set: function (value) {
-            if (this._locations !== value) {
-                this._locations = value;
-                this.notifyPropertyChange('locations', value);
-            }
         },
         enumerable: true,
         configurable: true

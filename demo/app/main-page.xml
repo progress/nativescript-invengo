@@ -1,4 +1,5 @@
 <Page xmlns="http://schemas.nativescript.org/tns.xsd"
+  xmlns:maps="nativescript-googlemaps"
   loaded="pageLoaded">
 
 
@@ -10,15 +11,15 @@
 
 
   <GridLayout margin="0" rows="200, auto, *, 30, 20">
-    <!-- <maps:TnsGoogleMaps id="map" marker="{{locations}}"/> -->
+    <maps:TnsGoogleMaps id="map" marker="{{location}}" zoom="20" />
 
     <GridLayout row="1">
 
       <StackLayout verticalAlignment="center" >
         <StackLayout orientation="horizontal" class="location">
-          <Label text="{{location.lat}}" textWrap="true" class="location-label"/>
+          <Label text="{{location.latitude}}" textWrap="true" class="location-label"/>
           <Label text="," textWrap="true"/>
-          <Label text="{{location.lng}}" textWrap="true" class="location-label"/>
+          <Label text="{{location.longitude}}" textWrap="true" class="location-label"/>
         </StackLayout>
 
         <Label text="{{tag}}" class="tag" textWrap="true"/>

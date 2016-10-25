@@ -5,12 +5,9 @@ import {Observable} from 'data/observable';
 import {ObservableArray} from "data/observable-array";
 
 var invengoModule = require("nativescript-invengo");
+
 var SqlLite = require('nativescript-sqlite');
 
-export interface Location {
-    lat : number,
-    lng : number
-}
 
 export class MainViewModel extends Observable {
 
@@ -21,18 +18,18 @@ export class MainViewModel extends Observable {
   private database:any;
 
 
-  private _locations: ObservableArray<geolocation.Location>;
-  private _location:Location;
+  private _locations: Array<geolocation.Location>;
+  private _location:geolocation.Location;
 
   constructor() {
     super();
 
     let that = this;
 
-    this._location  = {
-       lat : 37.4419,
-       lng : -122.1430
-    };
+    that.set("location", {
+      latitude :  37.4419,
+      longitude: -122.1430
+    });
 
     new SqlLite(global.DBNAME, (err, db)=>{
         if (err){
@@ -46,7 +43,7 @@ export class MainViewModel extends Observable {
     this._invengo = new invengoModule.Invengo();
 
     this._invengo.addReaderChangeListener((epc)=>{
-        that.database.execSQL("insert into invengo (tag, lat, lng, createdAt) values (?, ?, ? , ?)", [epc, that.location.lat, that.location.lng, new Date()], (err, id)=>{
+        that.database.execSQL("insert into invengo (tag, lat, lng, createdAt) values (?, ?, ? , ?)", [epc, that.location.latitude, that.location.longitude, new Date()], (err, id)=>{
           if (err){
             console.log(err);
           }
@@ -60,10 +57,13 @@ export class MainViewModel extends Observable {
     this.database.execSQL(schema).then((err, id)=>{
       let watchId = geolocation.watchLocation((loc)=>{
           if (loc){
+              console.log(loc);
+              
               that.set("location", {
-                  lat : loc.latitude.toFixed(4),
-                  lng: loc.longitude
+                  latitude : loc.latitude.toFixed(4),
+                  longitude: loc.longitude
               });
+              
               geolocation.clearWatch(watchId);
           }
       }, (e)=>{
@@ -81,25 +81,11 @@ export class MainViewModel extends Observable {
     return this._invengo;
   }
 
-  public get locations(): ObservableArray<geolocation.Location> {
-      if (!this._locations) {
-          this._locations = new ObservableArray<geolocation.Location>();
-      }
-      return this._locations;
-  }
-
-  public set locations(value: ObservableArray<geolocation.Location>) {
-      if (this._locations !== value) {
-          this._locations = value;
-          this.notifyPropertyChange('locations', value)
-      }
-  }
-
-  public get location(): Location {
+  public get location(): geolocation.Location {
     return this._location;
   }
 
-  public set location(value: Location) {
+  public set location(value: geolocation.Location) {
     if (this._location !== value) {
       this._location = value;
       this.notifyPropertyChange('location', value);
@@ -124,4 +110,5 @@ export class MainViewModel extends Observable {
   public history(){
       frameModule.topmost().navigate("history");
   }
+
 }
