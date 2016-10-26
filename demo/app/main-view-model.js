@@ -88,7 +88,7 @@ var MainViewModel = (function (_super) {
         this._invengo.readTag();
     };
     MainViewModel.prototype.history = function () {
-        frameModule.topmost().navigate("history");
+        frameModule.topmost().navigate("history-page");
     };
     return MainViewModel;
 }(observable_1.Observable));

@@ -1,3 +1,5 @@
+import frameModule = require('ui/frame');
+
 import { EventData } from 'data/observable';
 import { Page } from 'ui/page';
 import { MainViewModel } from './main-view-model';

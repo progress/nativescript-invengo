@@ -1,10 +1,13 @@
 import frameModule = require('ui/frame');
 
+import * as geolocation from "nativescript-geolocation";
+
 import observable = require("data/observable");
-import http = require('http');
 import {Observable} from 'data/observable';
 
 var SqlLite = require('nativescript-sqlite');
+
+import DetailViewModule = require("./detail-view-model");
 
 export interface HistoryItem {
     tag : string,
@@ -13,7 +16,7 @@ export interface HistoryItem {
     date : string,
 }
 
-export class HistoryModel extends observable.Observable {
+export class HistoryViewModel extends observable.Observable {
 
     private database:any;
     private _history:Array<HistoryItem>;
@@ -44,8 +47,8 @@ export class HistoryModel extends observable.Observable {
 
                             let historyItem = {
                                  tag : columns[1],
-                                 lat : parseFloat(columns[2]).toFixed(4),
-                                 lng : columns[3],
+                                 lat : that.toFixed(columns[2]),
+                                 lng : that.toFixed(columns[3]),
                                  date : columns[4]
                             }
 
@@ -60,27 +63,6 @@ export class HistoryModel extends observable.Observable {
                     console.log("SELECT ERROR", error);
             });
 
-        //     db.each("select * from invengo", [], (err, row)=>{
-
-        //         try {
-        //             let columns = row.split(',');
-
-        //             console.log(columns);
-
-        //             // let historyItem = {
-        //             //     tag : columns[1],
-        //             //     date : columns[2]
-        //             // }
-
-        //             // items.push(historyItem);
-        //        } catch (ex){
-        //            console.log(ex);
-        //        }
-
-        //     }, (err, count)=> {
-        //         // that.set("history", items);
-        //         console.log("Rows displayed:", count);
-        //     });
         });
    }
 
@@ -97,6 +79,30 @@ export class HistoryModel extends observable.Observable {
 
   public back(){
     frameModule.topmost().goBack();
+  }
+
+  public onTap(args) {
+    let item:HistoryItem = args.view.bindingContext;
+
+    let context  = new DetailViewModule.DetailViewModel();
+
+    context.set("tag", item.tag);
+
+    // context.set("location", {
+    //     latitude : item.lat,
+    //     longitude: item.lng
+    // });
+
+     let navEntry = {
+         moduleName : "detail-page",
+         context : context
+     }
+    
+     frameModule.topmost().navigate(navEntry);
+  }
+
+  public toFixed(value) {
+      return parseFloat(value).toFixed(4);
   }
 
 }

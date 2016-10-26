@@ -3,7 +3,7 @@
         <NavigationButton text="Back" android.systemIcon="ic_menu_back" tap="{{back}}"></NavigationButton>
     </ActionBar>
 
-    <ListView items="{{ history }}" >
+    <ListView items="{{ history }}" itemTap="{{onTap}}" >
       <ListView.itemTemplate>
         <GridLayout columns="auto,auto" rows="auto">
             <Image src="res://option_normal" col="0" class="history_image"/>

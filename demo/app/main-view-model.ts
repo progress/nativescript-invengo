@@ -108,7 +108,7 @@ export class MainViewModel extends Observable {
   }
 
   public history(){
-      frameModule.topmost().navigate("history");
+      frameModule.topmost().navigate("history-page");
   }
 
 }

@@ -1,0 +1,15 @@
+<Page xmlns="http://schemas.nativescript.org/tns.xsd"
+  xmlns:maps="nativescript-googlemaps"
+  navigatedTo="onNavigatedTo">
+
+    <ActionBar title="{{tag}}">
+        <NavigationButton text="Back" android.systemIcon="ic_menu_back" tap="{{back}}"></NavigationButton>
+    </ActionBar>
+
+
+  <GridLayout margin="0" rows="*, 50">
+    <maps:TnsGoogleMaps marker="{{location}}" />
+    <Image src="res://ic_connected_logo" class="logo" horizontalAlignment="center"  row="2"/>
+  </GridLayout>
+
+</Page>
