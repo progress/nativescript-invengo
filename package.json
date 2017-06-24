@@ -1,6 +1,6 @@
 {
     "name": "nativescript-invengo",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "description": "Invengo RFID reader plugin for nativescript",
     "main": "invengo.js",
     "nativescript": {

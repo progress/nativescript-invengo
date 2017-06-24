@@ -1,4 +1,3 @@
-
 declare var com: any;
 declare var java: any;
 declare var android: any;
@@ -17,10 +16,10 @@ export class Invengo {
       try {
         this.reader.setEventListener(new com.atid.lib.dev.event.RfidReaderEventListener({
             onReaderActionChanged: (reader, actionState)=> {
-                console.log(actionState);
+                // TODO:
             },
             onReaderStateChanged : (reader, state)=>{
-                console.log(state);
+                // TODO:
             },
             onReaderReadTag : (reader, tag, v1, v2)=> {
                // TODO:

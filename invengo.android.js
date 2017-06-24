@@ -11,10 +11,10 @@ var Invengo = (function () {
         try {
             this.reader.setEventListener(new com.atid.lib.dev.event.RfidReaderEventListener({
                 onReaderActionChanged: function (reader, actionState) {
-                    console.log(actionState);
+                    // TODO:
                 },
                 onReaderStateChanged: function (reader, state) {
-                    console.log(state);
+                    // TODO:
                 },
                 onReaderReadTag: function (reader, tag, v1, v2) {
                     // TODO:
