@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 var Invengo = (function () {
     function Invengo() {
         this.DEFULT_BANK = com.atid.lib.dev.rfid.type.BankType.EPC;

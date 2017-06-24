@@ -1,11 +1,11 @@
 {
     "name": "nativescript-invengo",
-    "version": "1.0.0",
+    "version": "1.0.2",
     "description": "Invengo RFID reader plugin for nativescript",
     "main": "invengo.js",
     "nativescript": {
         "platforms": {
-            "android": "2.0.0"
+            "android": "3.0.0"
         }
     },
     "repository": {
